@@ -9,6 +9,7 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
+RUNTIME_NAMES = {'data', 'cache', 'logs', 'outputs', 'weights', 'downloads'}
 FORBIDDEN_SUFFIXES = {'.pt', '.pth', '.ckpt', '.safetensors', '.onnx', '.bin', '.pkl',
                       '.pickle', '.npy', '.npz', '.whl', '.so', '.zip', '.gz', '.ipynb',
                       '.png', '.jpg', '.jpeg', '.gif', '.mp4', '.pdf', '.pem', '.key'}
@@ -23,13 +24,21 @@ SECRETS = [
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--compare-live', action='store_true', help='Also compare to original server source files')
-    parser.add_argument('--staged', action='store_true', help='Require every snapshotted source to be tracked/staged')
+    parser.add_argument('--compare-live', action='store_true', help='Also compare immutable official/dependency files to their server originals')
+    parser.add_argument('--staged', action='store_true', help='Require immutable snapshots to be tracked and runtime storage to be excluded')
     args = parser.parse_args()
     errors = []
     records = json.loads((ROOT / 'metadata/source_files.json').read_text())['files']
+    immutable = {rel: record for rel, record in records.items()
+                 if rel.startswith(('vendor/', 'external/'))}
+    project_changes = 0
     for rel, record in records.items():
         path = ROOT / rel
+        if rel not in immutable:
+            # Initial-import provenance is historical; project code is maintained in Git.
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != record['backup_sha256']:
+                project_changes += 1
+            continue
         if not path.is_file() or path.is_symlink():
             errors.append('Missing source: ' + rel)
             continue
@@ -45,6 +54,8 @@ def main():
         rel = path.relative_to(ROOT)
         if '.git' in rel.parts or any(part.startswith('.snapshot-') for part in rel.parts):
             continue
+        if rel.parts[0] in RUNTIME_NAMES:
+            continue  # Shared ignored storage is checked against the Git index below.
         if path.is_symlink():
             if path.is_absolute() and not path.resolve().is_relative_to(ROOT):
                 errors.append('External symlink: ' + str(rel))
@@ -54,8 +65,6 @@ def main():
         count += 1
         raw = path.read_bytes()
         total += len(raw)
-        if rel.parts[0] in {'data', 'cache', 'logs', 'outputs', 'weights', 'downloads'}:
-            errors.append('Runtime artifact: ' + str(rel))
         if (path.suffix.lower() in FORBIDDEN_SUFFIXES or path.name.startswith('.env')
                 or path.name in {'hosts.yml', 'config.yaml.local'}):
             errors.append('Forbidden artifact: ' + str(rel))
@@ -90,12 +99,17 @@ def main():
     staged = subprocess.check_output(['git', '-C', str(ROOT), 'ls-files', '-z'])
     tracked = {os.fsdecode(value) for value in staged.split(b'\0') if value}
     if args.staged:
-        for rel in sorted(set(records) - tracked):
+        for rel in sorted(set(immutable) - tracked):
             errors.append('Source excluded from Git index: ' + rel)
+    for rel in tracked:
+        if rel.split('/')[0] in RUNTIME_NAMES:
+            errors.append('Runtime storage tracked in Git: ' + rel)
     for value in staged.split(b'\0'):
         if value and not (ROOT / os.fsdecode(value)).exists():
             errors.append('Tracked path missing: ' + os.fsdecode(value))
-    print(json.dumps({'files': count, 'bytes': total, 'source_hashes': len(records),
+    print(json.dumps({'files': count, 'bytes': total, 'source_hashes': len(immutable),
+                      'initial_import_source_records': len(records),
+                      'project_files_changed_since_import': project_changes,
                       'compared_live': args.compare_live, 'errors': errors}, ensure_ascii=False, indent=2))
     if errors:
         raise SystemExit(1)

@@ -1,0 +1,10 @@
+{
+  "canonical_project": "/root/repos/MUVA-VGGTS-EXAM",
+  "effective_date": "2026-11-18",
+  "timezone": "Asia/Shanghai",
+  "policy": "Maintain experiment code, configs and docs in this Git project. Do not overwrite from the legacy workspace.",
+  "runtime_storage": "/root/datasets/MUVA_experiments",
+  "ignored_runtime_links": ["data", "cache", "logs", "outputs", "weights"],
+  "official_dependency_paths": "Existing config paths retained for strict checkpoint compatibility; read-only dependencies, not a project code source.",
+  "historical_import": "backup.json and source_files.json describe the original import; current project code is versioned in Git."
+}

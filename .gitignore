@@ -1,11 +1,11 @@
 # Local datasets and all generated runs
-/data/
-/cache/
-/logs/
-/outputs/
-/weights/
-/downloads/
-/artifacts/
+/data
+/cache
+/logs
+/outputs
+/weights
+/downloads
+/artifacts
 /.snapshot-*/
 
 # Weights, compiled packages, archives and notebook outputs
