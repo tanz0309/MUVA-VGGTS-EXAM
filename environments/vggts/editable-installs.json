@@ -1,0 +1,20 @@
+[
+  {
+    "package": "corresp_github-0.1.0.dist-info",
+    "direct_url": {
+      "dir_info": {
+        "editable": true
+      },
+      "url": "file:///root/VGGT-S-main"
+    }
+  },
+  {
+    "package": "vggt-0.0.1.dist-info",
+    "direct_url": {
+      "dir_info": {
+        "editable": true
+      },
+      "url": "file:///root/VGGT-S-main/third_party/vggt_main"
+    }
+  }
+]

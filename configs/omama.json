@@ -1,0 +1,38 @@
+{
+  "model": "omama",
+  "environment": "/opt/conda/envs/omama",
+  "repo": "/root/datasets/MUVA_experiments/vendor/O-MaMa-official",
+  "checkpoint": null,
+  "seed": 42,
+  "head_initialization": "random Attention_projector; no task-trained checkpoint",
+  "dinov2_checkpoint": "/root/.cache/torch/hub/checkpoints/dinov2_vitb14_reg4_pretrain.pth",
+  "fastsam_checkpoint": "/root/O-MaMa-main/FastSAM-main/weights/FastSAM-x.pt",
+  "reverse": true,
+  "reference_size": [
+    532,
+    952
+  ],
+  "target_size": [
+    700,
+    700
+  ],
+  "fastsam_image_size": 1024,
+  "fastsam_conf": 0.4,
+  "fastsam_iou": 0.9,
+  "training": {
+    "type": "supervised mask matching from random task head",
+    "epochs": 3,
+    "batch_size": 24,
+    "candidate_count": 32,
+    "learning_rate": 8e-05,
+    "weight_decay": 0.01,
+    "scheduler": "cosine_steps",
+    "minimum_lr": 1e-06,
+    "max_grad_norm": null
+  },
+  "repo_commit": "0f187c65cb9d8f8df1d8b5f445edbb0485956d88",
+  "protocol": "muva_author_modules_20261106_v2",
+  "dinov2_source": "/root/.cache/torch/hub/facebookresearch_dinov2_main",
+  "fastsam_source": "/root/datasets/MUVA_experiments/vendor/FastSAM-official",
+  "fastsam_commit": "b4ed20c2fed75eadc5aa7d8b09fedd137b873b52"
+}

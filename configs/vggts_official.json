@@ -1,0 +1,37 @@
+{
+  "protocol": "vggts_official_muva_exo_v1",
+  "environment": "/opt/conda/envs/vggts",
+  "repo": "/root/datasets/MUVA_experiments/vendor/VGGT-S-official",
+  "repo_commit": "7ba82679d662d42171b95f1977f01328f1b18630",
+  "vggt_repo": "/root/datasets/MUVA_experiments/vendor/vggt-official",
+  "vggt_commit": "a288dd0f14786c93483e45524328726ab7b1b4ce",
+  "vggt_checkpoint": "/root/VGGT-S-main/third_party/vggt_main/model.pt",
+  "vggt_checkpoint_sha256": "d15bf50a8615c8225ed48b51ea5cac673d82442ec0309036df555a053253afe0",
+  "seed": 42,
+  "tracking_queries": 50,
+  "native_camera_size": [
+    960,
+    540
+  ],
+  "training_batch_size": 8,
+  "official_per_gpu_batch_size": 8,
+  "epochs": 12,
+  "refine_ratio": 0.5,
+  "refine_time": 1,
+  "learning_rate": 5e-05,
+  "weight_decay": 0.0001,
+  "lr_milestones": [
+    8,
+    11
+  ],
+  "max_grad_norm": 1.0,
+  "image_size": 518,
+  "sa_tokens": 37,
+  "prompt_points": 5,
+  "source_crop_R": 2,
+  "target_crop_function": "official cal_crop_size_3x",
+  "target_kmeans_random_state": 0,
+  "target_kmeans_n_init": "auto",
+  "point_cache": "/root/datasets/MUVA_experiments/cache/vggts_official_points",
+  "compatibility_fix": "clone source point features before each Predictor call to avoid upstream in-place autograd error"
+}

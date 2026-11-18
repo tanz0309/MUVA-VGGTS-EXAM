@@ -1,0 +1,11 @@
+# checkpoints
+official_ckpts/*.pth
+
+# generated dataset jsons
+data/*.json
+
+# assets
+assets/*.gif
+
+# pos embed
+pos_embed/*

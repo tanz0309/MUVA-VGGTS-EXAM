@@ -1,0 +1,28 @@
+{
+  "model": "vggts",
+  "environment": "/opt/conda/envs/vggts",
+  "repo": "/root/VGGT-S-main",
+  "vggt_checkpoint": "/root/VGGT-S-main/third_party/vggt_main/model.pt",
+  "checkpoint": null,
+  "head_initialization": "random; no pretrained Predictor weights",
+  "image_size": 518,
+  "sa_tokens": 37,
+  "tracking_queries": 50,
+  "prompt_points": 5,
+  "remove_farthest_tracks": 10,
+  "source_context_ratio": 2.0,
+  "target_context_ratio": 3.0,
+  "minimum_crop_size": 98,
+  "refine_time": 1,
+  "seed": 42,
+  "training": {
+    "type": "MUVA supervised training from randomly initialized Predictor; frozen pretrained VGGT",
+    "epochs": 12,
+    "batch_size": 1,
+    "learning_rate": 0.00005,
+    "weight_decay": 0.0001,
+    "lr_milestones": [8, 11],
+    "max_grad_norm": 1.0,
+    "loss": "20 * native focal_loss + native dice_loss"
+  }
+}

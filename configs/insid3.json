@@ -1,0 +1,15 @@
+{
+  "model": "insid3",
+  "environment": "/opt/conda/envs/insid3-muva",
+  "repo": "/root/datasets/MUVA_experiments/vendor/INSID3-official",
+  "dinov3_source": "/root/.cache/torch/hub/facebookresearch_dinov3_main",
+  "checkpoint": "/root/INSID3/pretrain/dinov3_vitl16_pretrain_lvd1689m-8aa4cbdd.pth",
+  "image_size": 1024,
+  "svd_components": 500,
+  "tau": 0.6,
+  "merge_threshold": 0.2,
+  "seed": 42,
+  "training": "none; frozen training-free INSID3",
+  "repo_commit": "0c165a10cf52ab91f335883d06260de86854adbe",
+  "protocol": "muva_author_modules_20261106_v2"
+}

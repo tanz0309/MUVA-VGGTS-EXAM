@@ -1,0 +1,325 @@
+{
+  "format_version": 1,
+  "repositories": [
+    {
+      "name": "INSID3-official",
+      "path": "vendor/INSID3-official",
+      "source": "/root/datasets/MUVA_experiments/vendor/INSID3-official",
+      "url": "https://github.com/visinf/INSID3.git",
+      "git_revision": "0c165a10cf52ab91f335883d06260de86854adbe",
+      "copied_files": 29,
+      "omitted_non_source_files": [
+        "assets/clustering.png",
+        "assets/debiased_dinov3_pred.png",
+        "assets/original_dinov3_pred.png",
+        "assets/positional_subspace.png",
+        "assets/ref_boat.jpg",
+        "assets/ref_cat_image.jpg",
+        "assets/ref_cat_mask.png",
+        "assets/similarity_maps.png",
+        "assets/target_boat.jpg",
+        "assets/target_cat_image.jpg",
+        "assets/teaser.png"
+      ],
+      "patch": null,
+      "symlinks": [],
+      "license_files": [
+        "vendor/INSID3-official/LICENSE"
+      ],
+      "root_license_files": [
+        "vendor/INSID3-official/LICENSE"
+      ]
+    },
+    {
+      "name": "O-MaMa-official",
+      "path": "vendor/O-MaMa-official",
+      "source": "/root/datasets/MUVA_experiments/vendor/O-MaMa-official",
+      "url": "https://github.com/Maria-SanVil/O-MaMa.git",
+      "git_revision": "0f187c65cb9d8f8df1d8b5f445edbb0485956d88",
+      "copied_files": 17,
+      "omitted_non_source_files": [
+        "assets/teaser.png"
+      ],
+      "patch": null,
+      "symlinks": [],
+      "license_files": [
+        "vendor/O-MaMa-official/LICENSE"
+      ],
+      "root_license_files": [
+        "vendor/O-MaMa-official/LICENSE"
+      ]
+    },
+    {
+      "name": "FastSAM-official",
+      "path": "vendor/FastSAM-official",
+      "source": "/root/datasets/MUVA_experiments/vendor/FastSAM-official",
+      "url": "https://github.com/CASIA-IVA-Lab/FastSAM.git",
+      "git_revision": "b4ed20c2fed75eadc5aa7d8b09fedd137b873b52",
+      "copied_files": 179,
+      "omitted_non_source_files": [
+        "assets/Overview.png",
+        "assets/anomaly.png",
+        "assets/building.png",
+        "assets/dog_clip.png",
+        "assets/eightpic.pdf",
+        "assets/eightpic.png",
+        "assets/head_fig.png",
+        "assets/hf_everything_mode.png",
+        "assets/hf_points_mode.png",
+        "assets/logo.png",
+        "assets/more_usages/box_prompt.png",
+        "assets/more_usages/draw_edge.png",
+        "assets/more_usages/everything_mode.png",
+        "assets/more_usages/everything_mode_without_retina.png",
+        "assets/more_usages/more_points.png",
+        "assets/more_usages/text_prompt_cat.png",
+        "assets/replicate-1.png",
+        "assets/replicate-2.png",
+        "assets/replicate-3.png",
+        "assets/salient.png",
+        "examples/dogs.jpg",
+        "examples/sa_10039.jpg",
+        "examples/sa_11025.jpg",
+        "examples/sa_1309.jpg",
+        "examples/sa_192.jpg",
+        "examples/sa_414.jpg",
+        "examples/sa_561.jpg",
+        "examples/sa_862.jpg",
+        "examples/sa_8776.jpg",
+        "images/cat.jpg",
+        "images/dogs.jpg",
+        "output/cat.jpg",
+        "output/dogs.jpg",
+        "ultralytics/assets/bus.jpg",
+        "ultralytics/assets/zidane.jpg"
+      ],
+      "patch": null,
+      "symlinks": [],
+      "license_files": [
+        "vendor/FastSAM-official/LICENSE"
+      ],
+      "root_license_files": [
+        "vendor/FastSAM-official/LICENSE"
+      ]
+    },
+    {
+      "name": "VGGT-S-official",
+      "path": "vendor/VGGT-S-official",
+      "source": "/root/datasets/MUVA_experiments/vendor/VGGT-S-official",
+      "url": "https://github.com/buaa-colalab/VGGT-S.git",
+      "git_revision": "7ba82679d662d42171b95f1977f01328f1b18630",
+      "copied_files": 22,
+      "omitted_non_source_files": [],
+      "patch": null,
+      "symlinks": [],
+      "license_files": [
+        "vendor/VGGT-S-official/LICENSE"
+      ],
+      "root_license_files": [
+        "vendor/VGGT-S-official/LICENSE"
+      ]
+    },
+    {
+      "name": "vggt-official",
+      "path": "vendor/vggt-official",
+      "source": "/root/datasets/MUVA_experiments/vendor/vggt-official",
+      "url": "https://github.com/facebookresearch/vggt.git",
+      "git_revision": "a288dd0f14786c93483e45524328726ab7b1b4ce",
+      "copied_files": 83,
+      "omitted_non_source_files": [
+        "examples/kitchen/images/00.png",
+        "examples/kitchen/images/01.png",
+        "examples/kitchen/images/02.png",
+        "examples/kitchen/images/03.png",
+        "examples/kitchen/images/04.png",
+        "examples/kitchen/images/05.png",
+        "examples/kitchen/images/06.png",
+        "examples/kitchen/images/07.png",
+        "examples/kitchen/images/08.png",
+        "examples/kitchen/images/09.png",
+        "examples/kitchen/images/10.png",
+        "examples/kitchen/images/11.png",
+        "examples/kitchen/images/12.png",
+        "examples/kitchen/images/13.png",
+        "examples/kitchen/images/14.png",
+        "examples/kitchen/images/15.png",
+        "examples/kitchen/images/16.png",
+        "examples/kitchen/images/17.png",
+        "examples/kitchen/images/18.png",
+        "examples/kitchen/images/19.png",
+        "examples/kitchen/images/20.png",
+        "examples/kitchen/images/21.png",
+        "examples/kitchen/images/22.png",
+        "examples/kitchen/images/23.png",
+        "examples/kitchen/images/24.png",
+        "examples/llff_fern/images/000.png",
+        "examples/llff_fern/images/001.png",
+        "examples/llff_fern/images/002.png",
+        "examples/llff_fern/images/003.png",
+        "examples/llff_fern/images/004.png",
+        "examples/llff_fern/images/005.png",
+        "examples/llff_fern/images/006.png",
+        "examples/llff_fern/images/007.png",
+        "examples/llff_fern/images/008.png",
+        "examples/llff_fern/images/009.png",
+        "examples/llff_fern/images/010.png",
+        "examples/llff_fern/images/011.png",
+        "examples/llff_fern/images/012.png",
+        "examples/llff_fern/images/013.png",
+        "examples/llff_fern/images/014.png",
+        "examples/llff_fern/images/015.png",
+        "examples/llff_fern/images/016.png",
+        "examples/llff_fern/images/017.png",
+        "examples/llff_fern/images/018.png",
+        "examples/llff_fern/images/019.png",
+        "examples/llff_flower/images/000.png",
+        "examples/llff_flower/images/001.png",
+        "examples/llff_flower/images/002.png",
+        "examples/llff_flower/images/003.png",
+        "examples/llff_flower/images/004.png",
+        "examples/llff_flower/images/005.png",
+        "examples/llff_flower/images/006.png",
+        "examples/llff_flower/images/007.png",
+        "examples/llff_flower/images/008.png",
+        "examples/llff_flower/images/009.png",
+        "examples/llff_flower/images/010.png",
+        "examples/llff_flower/images/011.png",
+        "examples/llff_flower/images/012.png",
+        "examples/llff_flower/images/013.png",
+        "examples/llff_flower/images/014.png",
+        "examples/llff_flower/images/015.png",
+        "examples/llff_flower/images/016.png",
+        "examples/llff_flower/images/017.png",
+        "examples/llff_flower/images/018.png",
+        "examples/llff_flower/images/019.png",
+        "examples/llff_flower/images/020.png",
+        "examples/llff_flower/images/021.png",
+        "examples/llff_flower/images/022.png",
+        "examples/llff_flower/images/023.png",
+        "examples/llff_flower/images/024.png",
+        "examples/room/images/no_overlap_1.png",
+        "examples/room/images/no_overlap_2.jpg",
+        "examples/room/images/no_overlap_3.jpg",
+        "examples/room/images/no_overlap_4.jpg",
+        "examples/room/images/no_overlap_5.jpg",
+        "examples/room/images/no_overlap_6.jpg",
+        "examples/room/images/no_overlap_7.jpg",
+        "examples/room/images/no_overlap_8.jpg",
+        "examples/single_cartoon/images/model_was_never_trained_on_single_image_or_cartoon.jpg",
+        "examples/single_oil_painting/images/model_was_never_trained_on_single_image_or_oil_painting.png",
+        "examples/videos/Colosseum.mp4",
+        "examples/videos/fern.mp4",
+        "examples/videos/great_wall.mp4",
+        "examples/videos/kitchen.mp4",
+        "examples/videos/pyramid.mp4",
+        "examples/videos/room.mp4",
+        "examples/videos/single_cartoon.mp4",
+        "examples/videos/single_oil_painting.mp4"
+      ],
+      "patch": "patches/vggt-official.patch",
+      "symlinks": [],
+      "license_files": [
+        "vendor/vggt-official/LICENSE.txt"
+      ],
+      "root_license_files": [
+        "vendor/vggt-official/LICENSE.txt"
+      ],
+      "patch_sha256": "f5ed26f74925359d33135ffdc1646014d28f5b7acebacb9de6c768f4f0507df9"
+    },
+    {
+      "name": "V2-SAM-official",
+      "path": "vendor/V2-SAM-official",
+      "source": "/root/datasets/MUVA_experiments/vendor/V2-SAM-official",
+      "url": "https://github.com/jaychempan/V2-SAM.git",
+      "git_revision": "50e7c0584e852e1e16703c07e33c49e1d1bde635",
+      "copied_files": 958,
+      "omitted_non_source_files": [
+        "assets/demo/ego2exo/1_iou0.879_flowflex_rapid_antigen_test_kit_6d1847fe-d2d.gif",
+        "assets/demo/ego2exo/2_iou0.793_covid19_antigen_test_package_abfb0e8e-435.gif",
+        "assets/demo/ego2exo/3_iou0.715_frying_pan_071edc40-b64.gif",
+        "assets/demo/exo2ego/1_iou0.881_flowflex_rapid_antigen_test_kit_6d1847fe-d2d.gif",
+        "assets/demo/exo2ego/1_iou0.937_tissue_paper_roll_849aaee0-866.gif",
+        "assets/demo/exo2ego/2_iou0.875_frying_pan_071edc40-b64.gif",
+        "assets/demo/handal/top1_iou0.904_003008_a_spatula.gif",
+        "assets/demo/handal/top2_iou0.863_003009_a_spatula.gif",
+        "assets/demo/handal/top3_iou0.843_003005_a_utensil.gif",
+        "assets/ins.png",
+        "assets/v2sam-framework.png",
+        "assets/v2sam-logo.png",
+        "mmengine/docs/en/_static/image/cat_and_dog.png",
+        "mmengine/docs/en/_static/image/mmengine-logo.png",
+        "mmengine/docs/zh_cn/_static/image/mmengine-logo.png",
+        "mmengine/examples/segmentation/train.ipynb",
+        "mmengine/mmengine/dist/__init__.py",
+        "mmengine/mmengine/dist/dist.py",
+        "mmengine/mmengine/dist/utils.py",
+        "third_parts/.DS_Store",
+        "third_parts/dinov2/docs/Cell-DINO.png",
+        "third_parts/dinov2/docs/ChannelAdaptiveDINO.png",
+        "third_parts/dinov2/notebooks/cell_dino/inference.ipynb",
+        "third_parts/dinov2/notebooks/depth_estimation.ipynb",
+        "third_parts/dinov2/notebooks/dinotxt.ipynb",
+        "third_parts/dinov2/notebooks/semantic_segmentation.ipynb",
+        "vlm/.DS_Store",
+        "weights/.DS_Store"
+      ],
+      "patch": null,
+      "symlinks": [
+        {
+          "path": "projects/v2sam",
+          "target": "v2sam_fusion"
+        }
+      ],
+      "license_files": [
+        "vendor/V2-SAM-official/mmengine/LICENSE",
+        "vendor/V2-SAM-official/third_parts/dinov2/LICENSE",
+        "vendor/V2-SAM-official/third_parts/dinov2/LICENSE_CELL_DINO_CODE",
+        "vendor/V2-SAM-official/third_parts/dinov2/LICENSE_CELL_DINO_MODELS",
+        "vendor/V2-SAM-official/third_parts/dinov2/LICENSE_XRAY_DINO_MODEL",
+        "vendor/V2-SAM-official/third_parts/dinov2/dinov2/thirdparty/CLIP/LICENSE",
+        "vendor/V2-SAM-official/third_parts/dinov3/LICENSE.md"
+      ],
+      "root_license_files": []
+    },
+    {
+      "name": "dinov2-runtime",
+      "path": "external/dinov2-runtime",
+      "source": "/root/.cache/torch/hub/facebookresearch_dinov2_main",
+      "url": "https://github.com/facebookresearch/dinov2",
+      "git_revision": null,
+      "copied_files": 197,
+      "license_files": [
+        "external/dinov2-runtime/LICENSE",
+        "external/dinov2-runtime/LICENSE_CELL_DINO_CODE",
+        "external/dinov2-runtime/LICENSE_CELL_DINO_MODELS",
+        "external/dinov2-runtime/LICENSE_XRAY_DINO_MODEL",
+        "external/dinov2-runtime/dinov2/thirdparty/CLIP/LICENSE"
+      ],
+      "provenance": "Existing runtime source snapshot without Git metadata"
+    },
+    {
+      "name": "dinov3-runtime",
+      "path": "external/dinov3-runtime",
+      "source": "/root/.cache/torch/hub/facebookresearch_dinov3_main",
+      "url": "https://github.com/facebookresearch/dinov3",
+      "git_revision": null,
+      "copied_files": 213,
+      "license_files": [
+        "external/dinov3-runtime/LICENSE.md"
+      ],
+      "provenance": "Existing runtime source snapshot without Git metadata"
+    },
+    {
+      "name": "mmengine-runtime",
+      "path": "external/mmengine-runtime",
+      "source": "/root/V2-SAM/mmengine",
+      "url": "https://github.com/open-mmlab/mmengine",
+      "git_revision": null,
+      "copied_files": 466,
+      "license_files": [
+        "external/mmengine-runtime/LICENSE"
+      ],
+      "provenance": "Existing runtime source snapshot without Git metadata"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "repository": "tzz2002/MUVA",
+  "repo_type": "dataset",
+  "private": true,
+  "revision": "5c027b9917fe0373ca80f5b5dea5c317edf34603",
+  "folder": "core-20261109",
+  "cases": {
+    "train": 6224,
+    "val": 2215,
+    "test": 2008
+  },
+  "unique_rgb": {
+    "train": 6778,
+    "val": 2371,
+    "test": 2283
+  },
+  "manifest_sha256": {
+    "train": "185ec802f7ce58cd2960d0f6027f1901a9ea937ae790d067e88ddb0ddc0f651e",
+    "val": "f3ecbff3b893a3df8923a84969bfe9940ce5d03924d61616ff31e488415b7909",
+    "test": "b37c920c5817d972d9f1eb4942f6a2de9c341f4d762395b6bc5d758a67164f61"
+  },
+  "data_in_git": false
+}

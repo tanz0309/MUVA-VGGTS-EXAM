@@ -1,0 +1,38 @@
+{
+  "environment": "/personal_workspace/TanZhuzhu/.conda/envs/v2sam",
+  "repo": "/root/datasets/MUVA_experiments/vendor/V2-SAM-official",
+  "checkpoint": null,
+  "seed": 42,
+  "sam2_checkpoint": "/root/datasets/MUVA_experiments/weights/sam2/sam2_hiera_large.pt",
+  "dinov3_source": "/root/datasets/MUVA_experiments/vendor/V2-SAM-official/third_parts/dinov3",
+  "dinov3_checkpoint": "/root/INSID3/pretrain/dinov3_vitl16_pretrain_lvd1689m-8aa4cbdd.pth",
+  "fill_holes": true,
+  "sparse_correspondence": {
+    "patch_size": 16,
+    "image_size": 768,
+    "mask_fg_threshold": 0.6,
+    "stratify_distance_threshold": 150.0,
+    "n_layers": 24,
+    "max_points_per_object": 1,
+    "outlier_removal_ratio": 0.25
+  },
+  "head_initialization": "random VPMatcher and visual projection; public SAM2 decoder initialization; no V2-SAM task-trained checkpoint",
+  "training": {
+    "type": "new supervised MUVA expert training",
+    "epochs": 24,
+    "batch_size": 16,
+    "learning_rate": 4e-05,
+    "weight_decay": 0.05,
+    "scheduler": "native_mmengine_linear_cosine",
+    "warmup_ratio": 0.05,
+    "max_grad_norm": 1.0,
+    "accumulative_counts": 1,
+    "validation_interval": 2,
+    "optimizer_wrapper": "native_mmengine_amp",
+    "warmup_start_factor": 1e-05
+  },
+  "model": "v2sam",
+  "variant": "fusion",
+  "repo_commit": "50e7c0584e852e1e16703c07e33c49e1d1bde635",
+  "protocol": "muva_author_modules_20261106_v2"
+}

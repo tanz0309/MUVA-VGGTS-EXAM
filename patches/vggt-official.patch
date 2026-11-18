@@ -1,0 +1,21 @@
+diff --git a/vggt/heads/track_head.py b/vggt/heads/track_head.py
+index a4f1d9b..b49da0a 100644
+--- a/vggt/heads/track_head.py
++++ b/vggt/heads/track_head.py
+@@ -69,7 +69,7 @@ class TrackHead(nn.Module):
+ 
+         self.iters = iters
+ 
+-    def forward(self, aggregated_tokens_list, images, patch_start_idx, query_points=None, iters=None):
++    def forward(self, aggregated_tokens_list, images, patch_start_idx, query_points=None, iters=None, feat=False):
+         """
+         Forward pass of the TrackHead.
+ 
+@@ -101,4 +101,7 @@ class TrackHead(nn.Module):
+         # Perform tracking using the extracted features
+         coord_preds, vis_scores, conf_scores = self.tracker(query_points=query_points, fmaps=feature_maps, iters=iters)
+ 
++        # Required by the VGGT-S authors' installation instructions.
++        if feat:
++            return coord_preds, vis_scores, conf_scores, feature_maps
+         return coord_preds, vis_scores, conf_scores

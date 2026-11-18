@@ -1,0 +1,9 @@
+{
+  "created_at": "2026-11-18T07:59:33.360839+00:00",
+  "live_project": "/root/datasets/MUVA_experiments",
+  "backup_worktree": "/root/repos/MUVA-VGGTS-EXAM",
+  "source_file_count": 2240,
+  "gpu": "RTX 4090; driver-reported 49140 MiB",
+  "seed": 42,
+  "note": "Code-only snapshot; source hashes verified. Not a model training or accuracy result."
+}

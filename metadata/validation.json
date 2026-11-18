@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-11-18T07:59:33+00:00",
+  "source_files_compared_to_live": 2240,
+  "source_hash_errors": 0,
+  "credential_pattern_findings": 0,
+  "forbidden_artifact_findings": 0,
+  "python_syntax": "Local scripts, tools, data tools and tests parsed successfully",
+  "bash_syntax": "run.sh passed bash -n",
+  "metric_regression_tests": {"passed": 6, "failed": 0},
+  "pccs_regression_tests": {"passed": 6, "failed": 0},
+  "limitations": "Code-backup checks only. No new GPU model forward, training, full validation/test, environment installation or network source restore was run. Data-dependent tests are preserved but were not rerun."
+}
