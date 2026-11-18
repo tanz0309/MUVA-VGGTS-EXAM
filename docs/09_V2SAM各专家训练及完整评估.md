@@ -40,13 +40,23 @@ SAM2图像使用官方 `DirectResize(1024)`；提示掩码和训练监督按作�
 | 混合精度 | BF16，动态loss scaler | 官方MMEngine AmpOptimWrapper |
 | 裁剪 | 梯度范数1 | 官方配置 |
 | 调度 | 5%迭代线性warmup，start_factor1e-5，之后cosine到0 | 官方MMEngine调度器 |
-| 验证 | 每2轮共同val，按Visible mIoU选best | 官方频率＋公共MUVA评价器 |
+| 验证 | 两专家各自每2轮运行共同val，按Visible mIoU选best | Fusion与公开配置一致；Visual公开配置每1轮，当前MUVA入口改为每2轮，属本地频率差异 |
 
 损失全部来自官方forward：视觉对比、结构约束mask与最终mask。训练驱动只替换MUVA迭代、统一评价和checkpoint IO，不是原 `tools/dist.sh` 分布式启动原样运行；优化、累积和调度由官方MMEngine类执行。
 
 前向对比负样本池为batch16，梯度累积1次；有效更新batch16仍不同于作者16×4=64。学习率保持作者设置，不根据显存做未经验证的线性放大。按seed42正常打乱，不添加不同场景优先采样策略。记录每个 `microstep` 和实际optimizer `step`，每25个microstep打印。当前smoke-train仅执行1个microstep、16个图对、1次真实更新。
 
 保存任务权重、优化器、AMP scaler、调度器、原生对比学习计数器和随机状态，支持完整epoch恢复。调度器按microstep更新；当前累积为1，microstep与实际optimizer更新同步记录。
+
+## 训练中验证与完整Multi验证
+
+Fusion与Visual都已随训练自动验证：当前MUVA入口每2轮用该专家本身评估完整val，结果在各自训练目录的`val_epoch_XX`，据此选择各自的`best.pth`。不需要手工命令才能产生这些单专家验证结果。
+
+最终`evaluate v2sam-multi`评估的是Anchor、训练后的Fusion、训练后的Visual及论文式PCCS选择链路，需要同时加载两个专家权重；单专家的验证分数不能当作完整组合的分数。当前两个训练任务独立运行，训练入口尚未串接“双方结束后自动运行Multi评估”。单独执行Multi命令是本地任务组织方式，可以在不修改官方模型结构的情况下自动化，不是作者规定必须手工验证。
+
+固定版本作者README要求分别训练Visual/Fusion，Anchor免训练；两个公开配置都包含训练中ValLoop，其中Fusion的`val_interval=2`、Visual为1。当前MUVA两者每2轮验证，必须如实记录Visual的频率差异，不能统称为完全相同的官方设置。当前运行不因此改配置或重启。
+
+核对来源：[固定版本README](https://github.com/jaychempan/V2-SAM/blob/50e7c0584e852e1e16703c07e33c49e1d1bde635/README.md)、[Fusion配置](https://github.com/jaychempan/V2-SAM/blob/50e7c0584e852e1e16703c07e33c49e1d1bde635/projects/v2sam_fusion/configs/v2sam.py)、[Visual配置](https://github.com/jaychempan/V2-SAM/blob/50e7c0584e852e1e16703c07e33c49e1d1bde635/projects/v2sam_visual/configs/v2sam.py)。
 
 ## PCCS的具体定义
 
