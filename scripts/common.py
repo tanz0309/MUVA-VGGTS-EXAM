@@ -72,7 +72,9 @@ def metrics(pred, gt):
     ids = np.flatnonzero(areas >= threshold); ids = ids[ids != 0]
     hits = np.bincount(labels[pred], minlength=len(areas))
     coverage = hits[ids] / areas[ids]
+    smallest = areas[ids] == areas[ids].min()
     successes = coverage >= .5
+    successes70 = coverage >= .7
     pb, gb = boundary(pred), boundary(gt)
     tolerance = int(np.ceil(.008 * np.linalg.norm(gt.shape)))
     pn, gn = int(pb.sum()), int(gb.sum())
@@ -85,8 +87,11 @@ def metrics(pred, gt):
     return {'visible_iou': intersection / union,
             'dice': 2 * intersection / (pa + ga), 'boundary_f': bf,
             'cr50': float(successes.mean()) if len(ids) else None,
-            'scr50': float(successes[areas[ids] == areas[ids].min()].mean()) if len(ids) else None,
+            'scr50': float(successes[smallest].mean()) if len(ids) else None,
             'all_components_covered50': bool(successes.all()) if len(ids) else None,
+            'cr70': float(successes70.mean()) if len(ids) else None,
+            'scr70': float(successes70[smallest].mean()) if len(ids) else None,
+            'all_components_covered70': bool(successes70.all()) if len(ids) else None,
             'precision': intersection / pa if pa else 0., 'recall': intersection / ga,
             'components': len(ids), 'component_coverages': coverage.tolist(),
             'component_min_area': threshold, 'boundary_tolerance_pixels': tolerance,
@@ -95,7 +100,8 @@ def metrics(pred, gt):
 
 def summarize(rows):
     keys = ['visible_iou', 'dice', 'boundary_f', 'cr50', 'scr50',
-            'all_components_covered50', 'precision', 'recall']
+            'all_components_covered50', 'cr70', 'scr70',
+            'all_components_covered70', 'precision', 'recall']
     means = {k: float(np.mean([r[k] for r in rows if r[k] is not None])) for k in keys}
     times = [r['inference_seconds'] for r in rows if not r.get('failed')]
     means.update({'count': len(rows), 'failures': sum(bool(r.get('failed')) for r in rows),

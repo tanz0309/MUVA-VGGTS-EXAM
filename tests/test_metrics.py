@@ -46,5 +46,17 @@ class MetricsTests(unittest.TestCase):
         self.assertEqual(r['components'],2)
         self.assertLess(r['visible_iou'],1.)
 
+    def test_70_threshold_is_stricter_than_50(self):
+        p=np.zeros_like(self.gt)
+        p[10:22,10:60]=True   # 60% of the 1000px component -> fails @70, passes @50
+        p[60:65,60:70]=True   # smallest component fully covered
+        r=metrics(p,self.gt)
+        self.assertEqual(r['cr50'],1.)
+        self.assertEqual(r['cr70'],.5)
+        self.assertTrue(r['all_components_covered50'])
+        self.assertFalse(r['all_components_covered70'])
+        self.assertEqual(r['scr50'],1.)
+        self.assertEqual(r['scr70'],1.)
+
 
 if __name__ == '__main__': unittest.main()
