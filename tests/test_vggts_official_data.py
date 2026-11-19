@@ -79,7 +79,8 @@ class OfficialDataTests(unittest.TestCase):
         self.assertEqual(c['exp']['lr'], 5e-5)
         self.assertEqual(c['exp']['lr_drops'], [8, 11])
         self.assertEqual(c['exp']['train_samples'], 6224)
-        self.assertEqual(c['data']['train_batch_size'], 2)
+        self.assertEqual(c['data']['train_batch_size'], self.config['training_batch_size'])
+        self.assertEqual(self.config['training_batch_size'], 8)
 
     def test_missing_points_generated_once_and_reused_without_gt(self):
         p = copy.copy(self.preprocessing)
@@ -138,6 +139,74 @@ class OfficialDataTests(unittest.TestCase):
             with patch('torch.utils.data.get_worker_info', return_value=object()):
                 with self.assertRaisesRegex(RuntimeError, 'num_workers=0'):
                     p.make_points(self.inputs, object(), 'worker')
+
+    # ---- Phase 1 selector integration -------------------------------------------------
+    def selector_preprocessing(self):
+        return MuvaPreprocessing(self.config, selector_config={
+            'method': 'block_first', 'budget': 5, 'eps': 0.05, 'min_samples': 2})
+
+    def test_default_selector_matches_native_kmeans(self):
+        from utils import cluster_points
+        prepared = self.preprocessing.prepare(self.inputs, self.cached)
+        points = np.asarray(prepared['audit']['point_selector']['candidate_points_crop'], np.float32)
+        _, centers = cluster_points(points, K=5)
+        np.testing.assert_array_equal(prepared['target_points'], centers.astype(np.float32))
+        self.assertIsNone(prepared['audit']['point_selector']['selected_indices'])
+        self.assertEqual(prepared['audit']['point_selector']['method_effective'], 'kmeans')
+
+    def test_selector_switch_keeps_inputs_recipe_and_cache(self):
+        block_first = self.selector_preprocessing()
+        a = self.preprocessing.prepare(self.inputs, self.cached)
+        b = block_first.prepare(self.inputs, self.cached)
+        for key in ('source', 'source_mask', 'target', 'tracks', 'inliers'):
+            np.testing.assert_array_equal(a[key], b[key])
+        self.assertEqual(a['meta'], b['meta'])
+        self.assertEqual(a['audit']['selection_inputs'], b['audit']['selection_inputs'])
+        self.assertEqual(self.preprocessing.recipe, block_first.recipe)
+        self.assertEqual(self.preprocessing.cache_path(self.inputs),
+                         block_first.cache_path(self.inputs))
+        self.assertNotIn('selector', self.preprocessing.config)
+        self.assertEqual(self.config, json.loads((ROOT/'configs/vggts_official.json').read_text()))
+
+    def test_both_selectors_avoid_target_gt_during_prepare(self):
+        block_first = self.selector_preprocessing()
+        with patch('vggts_official_data.read_gt',
+                   side_effect=AssertionError('GT read during inference preprocessing')):
+            self.assertTrue(self.preprocessing.prepare(self.inputs, self.cached)['source_mask'].any())
+            self.assertTrue(block_first.prepare(self.inputs, self.cached)['source_mask'].any())
+
+    def test_block_first_prompts_restore_to_original_coordinates(self):
+        prepared = self.selector_preprocessing().prepare(self.inputs, self.cached)
+        original = np.asarray(prepared['audit']['positive_prompts_original'])
+        meta = prepared['meta']
+        recovered = (original/2 - np.array([meta['x1'], meta['y1']]))*518/meta['crop_size']
+        np.testing.assert_allclose(recovered, prepared['target_points'], atol=1e-4)
+
+    def test_block_first_cold_and_warm_select_the_same_points(self):
+        p = copy.copy(self.selector_preprocessing())
+        p.point_cache_usage = {'generated_online': 0, 'reused': 0}
+        with tempfile.TemporaryDirectory(dir=ROOT/'cache') as tmp:
+            p.cache = Path(tmp)
+            def generate(inputs, backbone, case_id):
+                p.cache_path(inputs).write_text(json.dumps({**self.cached, 'recipe': p.recipe}))
+                return True
+            with patch.object(p, 'make_points', side_effect=generate):
+                cold = p.prepare(self.inputs, vggt=object(), case_id='cold')
+                warm = p.prepare(self.inputs, vggt=object(), case_id='warm')
+        np.testing.assert_array_equal(cold['target_points'], warm['target_points'])
+        self.assertEqual(cold['audit']['point_selector']['selected_indices'],
+                         warm['audit']['point_selector']['selected_indices'])
+
+    def test_fallback_uses_the_original_40_candidate_points(self):
+        from utils import cluster_points
+        cached = {'tracks_518': np.tile(np.array([[240., 140.]], np.float32), (50, 1)).tolist()}
+        prepared = self.selector_preprocessing().prepare(self.inputs, cached)
+        selector = prepared['audit']['point_selector']
+        self.assertEqual(selector['fallback_reason'], 'insufficient_unique_points')
+        self.assertIsNone(selector['selected_indices'])
+        points = np.asarray(selector['candidate_points_crop'], np.float32)
+        _, centers = cluster_points(points, K=5)
+        np.testing.assert_array_equal(prepared['target_points'], centers.astype(np.float32))
 
 
 if __name__ == '__main__':

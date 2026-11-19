@@ -13,6 +13,8 @@ import torch
 from torch.utils.data import Dataset
 
 from common import ROOT, load_rows, read_inputs, read_gt, write_json
+from vggts_point_selector import (array_fingerprint, select_target_points,
+                                  validate_selector_config)
 
 
 def setup_sources(config):
@@ -43,8 +45,13 @@ def inputs_key(inputs):
 
 
 class MuvaPreprocessing:
-    def __init__(self, config):
+    def __init__(self, config, selector_config=None):
         self.config = config
+        # Selector settings stay out of the base config so old checkpoints and
+        # the first-stage cache recipe remain strictly compatible.
+        self.selector_config = validate_selector_config(
+            selector_config if selector_config is not None else {},
+            prompt_points=config['prompt_points'])
         self.pad_frame = setup_sources(config)
         # Batch size and epochs do not change frozen first-stage point generation.
         recipe = {k: config[k] for k in ['protocol', 'repo_commit', 'vggt_commit',
@@ -159,7 +166,12 @@ class MuvaPreprocessing:
         # A dummy mask keeps target GT out of crop and prompt construction, including evaluation.
         target, _, points, _, meta = clip_exo_box_center_wp(
             inliers, tar_camera, np.zeros(tar_camera.shape[:2], np.uint8), size, size, crop_size)
-        _, prompts = cluster_points(points, K=cfg['prompt_points'])
+        # Phase 1 changes only this 40->5 choice; crop and cache stay untouched.
+        selection = select_target_points(
+            points, image_size=size, config=self.selector_config,
+            native_kmeans=cluster_points)
+        prompts = selection.prompts_xy
+        candidate_points = np.ascontiguousarray(points, dtype=np.float32)
         return {'source': src, 'source_mask': smask, 'target': target,
                 'target_points': prompts.astype(np.float32), 'meta': meta,
                 'original_shape': tar.shape[:2], 'tracks': tracks, 'inliers': inliers,
@@ -168,7 +180,15 @@ class MuvaPreprocessing:
                     'tracking_points_original': (tracks*2).tolist(),
                     'filtered_points_original': (inliers*2).tolist(),
                     'positive_prompts_original': ((prompts*crop_size/size+
-                        np.array([meta['x1'], meta['y1']]))*2).tolist()}}
+                        np.array([meta['x1'], meta['y1']]))*2).tolist(),
+                    'point_selector': selection.audit,
+                    'selection_inputs': {
+                        'candidate_points_sha256': array_fingerprint(candidate_points),
+                        'target_crop_rgb_sha256': array_fingerprint(target),
+                        'source_crop_rgb_sha256': array_fingerprint(src),
+                        'source_crop_mask_sha256': array_fingerprint(smask),
+                        'meta_sha256': hashlib.sha256(json.dumps(
+                            meta, sort_keys=True, separators=(',', ':')).encode()).hexdigest()}}}
 
     def target_supervision(self, gt, prepared):
         mask = cv2.resize(gt.astype(np.uint8), tuple(self.config['native_camera_size']),

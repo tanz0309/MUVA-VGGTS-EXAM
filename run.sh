@@ -8,9 +8,11 @@ if [[ "$action" == "prepare" ]]; then
   exec /opt/conda/envs/insid3-muva/bin/python "$TASK_ROOT/scripts/prepare_data.py"
 fi
 if [[ "$action" == "help" || -z "$model" ]]; then
-  echo 'Usage: bash run.sh {smoke|evaluate|smoke-train|train} {insid3|vggts|omama|v2sam|v2sam-visual|v2sam-anchor|v2sam-multi} [options]'
+  echo 'Usage: bash run.sh {smoke|smoke-evaluate|evaluate|smoke-train|train} {insid3|vggts|omama|v2sam|v2sam-visual|v2sam-anchor|v2sam-multi} [options]'
   echo 'VGGT-S now uses the pinned official-code MUVA entry. Old checkpoints are incompatible.'
   echo 'VGGT-S generates missing points on GPU during train/evaluate and reuses its cache.'
+  echo 'VGGT-S phase 1 selector: add --selector-config configs/point_selectors/block_first_v1.json'
+  echo '  to a formal evaluate, or to smoke-evaluate with --checkpoint and --limit (default 8).'
   echo 'Optional VGGT-S precompute: GPU_ID=0 bash run.sh prepare-points vggts --split all'
   echo 'Optional cache inspection: bash run.sh check-data vggts --split all'
   echo 'Data preparation: bash run.sh prepare'

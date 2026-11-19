@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "method": "block_first",
+  "budget": 5,
+  "eps": 0.05,
+  "min_samples": 2
+}
