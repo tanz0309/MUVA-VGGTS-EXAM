@@ -34,6 +34,7 @@ bash run.sh help
 - [项目架构与模型代码导读](docs/12_项目架构与模型代码导读.md)
 - [VGGT-S 第一阶段 Block-First 选点](docs/13_VGGTS_Phase1_BlockFirst.md)
 - [Block-First 诊断结论](docs/14_VGGTS_Phase1_诊断结论.md)
+- [无提示分块恢复：Phase A 实现、复现命令与结果入口](docs/15_VGGTS_NoPrompt_PhaseA.md)
 - [训练、验证命令和结果位置](docs/07_终端命令与结果查看.md)
 - [统一目录及已有实验衔接](docs/11_统一项目目录与现有实验衔接.md)
 - [版本管理和新服务器恢复](docs/BACKUP_AND_RESTORE.md)
