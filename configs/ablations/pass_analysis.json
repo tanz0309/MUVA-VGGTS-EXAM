@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "mode": "pass-analysis",
+  "groups": ["A0", "A1", "A2", "A3"],
+  "corrupted_feedback": {
+    "method": "circular_shift",
+    "height_fraction": 0.5,
+    "width_fraction": 0.5
+  },
+  "repeat_max_abs_tolerance": 0.00001,
+  "visualization_count": 12
+}
